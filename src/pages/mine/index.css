@@ -1,0 +1,140 @@
+.mine-page {
+  min-height: 100vh;
+  padding: 32rpx 28rpx 156rpx;
+}
+
+.profile-card, .quota-card, .menu-card {
+  margin-bottom: 22rpx;
+  border-radius: 18rpx;
+  background: #fff;
+  box-shadow: 0 8rpx 30rpx rgba(25, 45, 36, 0.06);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+}
+
+.avatar-wrap {
+  width: 116rpx;
+  height: 116rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e4f2eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 116rpx;
+  height: 116rpx;
+}
+
+.avatar-placeholder {
+  font-size: 22rpx;
+  color: #2f936b;
+  font-weight: 700;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+}
+
+.profile-name {
+  display: block;
+  font-size: 34rpx;
+  color: #18211d;
+  font-weight: 800;
+}
+
+.profile-sub {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #8b9992;
+}
+
+.chevron {
+  font-size: 44rpx;
+  color: #b9c4bf;
+}
+
+.quota-card {
+  padding: 28rpx;
+}
+
+.quota-card__title {
+  display: block;
+  font-size: 28rpx;
+  color: #66746d;
+}
+
+.quota-card__value {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 64rpx;
+  line-height: 72rpx;
+  color: #2f936b;
+  font-weight: 850;
+}
+
+.quota-card__desc {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: #8b9992;
+}
+
+.menu-card {
+  overflow: hidden;
+}
+
+.menu-item {
+  min-height: 108rpx;
+  padding: 22rpx 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #eef3f0;
+}
+
+.menu-item:last-child {
+  border-bottom: 0;
+}
+
+.menu-item__title {
+  display: block;
+  font-size: 29rpx;
+  color: #18211d;
+  font-weight: 700;
+}
+
+.menu-item__desc {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 23rpx;
+  color: #8b9992;
+}
+
+.logout-button, .login-button {
+  height: 90rpx;
+  border-radius: 22rpx;
+  background: #fff;
+  color: #66746d;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button {
+  background: #2f936b;
+  color: #fff;
+  font-weight: 750;
+}

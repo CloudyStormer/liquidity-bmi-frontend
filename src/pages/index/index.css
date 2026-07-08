@@ -1,0 +1,266 @@
+.page {
+  min-height: 100vh;
+  padding: 28rpx 28rpx 156rpx;
+}
+
+.hero {
+  padding: 30rpx 6rpx 24rpx;
+}
+
+.hero__eyebrow {
+  display: block;
+  font-size: 22rpx;
+  letter-spacing: 2rpx;
+  color: #2f936b;
+  font-weight: 700;
+}
+
+.hero__title {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 46rpx;
+  line-height: 58rpx;
+  color: #18211d;
+  font-weight: 800;
+}
+
+.hero__desc {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  color: #66746d;
+}
+
+.card {
+  margin-bottom: 22rpx;
+  padding: 30rpx;
+  border-radius: 18rpx;
+  background: #fff;
+  box-shadow: 0 8rpx 30rpx rgba(25, 45, 36, 0.06);
+}
+
+.card__title {
+  display: block;
+  font-size: 31rpx;
+  color: #18211d;
+  font-weight: 750;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.muted {
+  font-size: 23rpx;
+  color: #8b9992;
+}
+
+.grid-2 {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 24rpx;
+}
+
+.grid-2--spaced {
+  margin-top: 18rpx;
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+  padding: 20rpx;
+  border-radius: 18rpx;
+  background: #f5f9f7;
+  border: 2rpx solid #e6efea;
+}
+
+.field__label {
+  display: block;
+  font-size: 24rpx;
+  color: #66746d;
+}
+
+.field__input {
+  height: 54rpx;
+  margin-top: 10rpx;
+  font-size: 38rpx;
+  color: #18211d;
+  font-weight: 750;
+}
+
+.field__unit {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #8b9992;
+}
+
+.segmented {
+  display: flex;
+  height: 58rpx;
+  margin-top: 12rpx;
+  padding: 4rpx;
+  border-radius: 16rpx;
+  background: #e8efeb;
+}
+
+.segmented__item {
+  flex: 1;
+  border-radius: 13rpx;
+  color: #66746d;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segmented__item--active {
+  background: #2f936b;
+  color: #fff;
+  font-weight: 700;
+}
+
+.primary-button, .premium-button, .outline-button {
+  height: 92rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-weight: 750;
+}
+
+.primary-button {
+  margin-top: 26rpx;
+  background: #2f936b;
+  color: #fff;
+}
+
+.result-card {
+  text-align: center;
+}
+
+.bmi-value {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 92rpx;
+  line-height: 104rpx;
+  font-weight: 850;
+}
+
+.bmi-label {
+  display: block;
+  font-size: 24rpx;
+  color: #8b9992;
+}
+
+.status-pill {
+  display: inline-flex;
+  margin-top: 18rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.reference-box {
+  margin-top: 22rpx;
+  padding: 18rpx;
+  border-radius: 16rpx;
+  background: #f5f9f7;
+}
+
+.reference-box__label, .note, .empty-text {
+  display: block;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: #66746d;
+}
+
+.reference-box__value {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  color: #18211d;
+  font-weight: 750;
+}
+
+.note {
+  margin-top: 18rpx;
+  text-align: left;
+}
+
+.empty-text {
+  margin-top: 24rpx;
+}
+
+.advice-card {
+  overflow: hidden;
+}
+
+.blur-panel {
+  position: relative;
+  margin-top: 22rpx;
+  padding: 26rpx;
+  border-radius: 18rpx;
+  background: linear-gradient(135deg, #f2f7f4, #e8f3ee);
+}
+
+.blur-line {
+  display: block;
+  height: 34rpx;
+  margin-bottom: 18rpx;
+  border-radius: 999rpx;
+  color: transparent;
+  background: rgba(76, 111, 95, 0.18);
+  filter: blur(4rpx);
+}
+
+.blur-line--short {
+  width: 76%;
+}
+
+.premium-button {
+  margin-top: 24rpx;
+  background: #17251f;
+  color: #fff;
+}
+
+.advice-title {
+  display: block;
+  margin-top: 22rpx;
+  font-size: 31rpx;
+  color: #18211d;
+  font-weight: 750;
+}
+
+.advice-overview, .advice-section__body {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  color: #526058;
+}
+
+.advice-section {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  background: #f7faf8;
+}
+
+.advice-section__title {
+  display: block;
+  font-size: 27rpx;
+  color: #2f936b;
+  font-weight: 750;
+}
+
+.outline-button {
+  border: 2rpx solid #2f936b;
+  color: #2f936b;
+  background: #fff;
+}
