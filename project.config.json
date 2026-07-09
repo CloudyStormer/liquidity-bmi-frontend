@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "liquidity-bmi-frontend",
   "description": "BMI健康测算微信小程序",
-  "appid": "touristappid",
+  "appid": "wxd95e6be982bdb0a8",
   "setting": {
     "urlCheck": true,
     "es6": true,
