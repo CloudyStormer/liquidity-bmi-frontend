@@ -22,13 +22,16 @@ export default function MinePage() {
   })
 
   async function refreshProfile() {
-    setUser(getUser())
-    if (getUser()) {
+    const currentUser = getUser()
+    setUser(currentUser)
+    if (currentUser) {
       try {
         setUsage(await getUsageStatus())
       } catch {
         setUsage(null)
       }
+    } else {
+      setUsage(null)
     }
   }
 
@@ -53,9 +56,12 @@ export default function MinePage() {
       </View>
 
       <View className='quota-card'>
-        <Text className='quota-card__title'>今日功能次数</Text>
-        <Text className='quota-card__value'>{usage ? usage.remaining : '--'}</Text>
-        <Text className='quota-card__desc'>每天 0 点刷新 3 次；广告完整观看后 +1 次。</Text>
+        <Text className='quota-card__title'>今日可用次数</Text>
+        <Text className='quota-card__value'>{usage ? `${usage.remaining}/${usage.dailyTotal}` : '--/--'}</Text>
+        <Text className='quota-card__desc'>
+          {usage ? `今日已用 ${usage.usedToday} 次，广告增加 ${usage.adRewardsToday} 次，历史累计使用 ${usage.totalUsed} 次。` : '登录后同步真实次数。'}
+        </Text>
+        <Text className='quota-card__desc'>每天 0 点恢复 3 次；当日用完后，完整观看广告才会增加 1 次。</Text>
       </View>
 
       <View className='menu-card'>

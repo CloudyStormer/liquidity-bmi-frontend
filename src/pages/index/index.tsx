@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
-import Taro from '@tarojs/taro'
+import Taro, { useDidShow } from '@tarojs/taro'
 import { Button, Input, Text, View } from '@tarojs/components'
 import LoginPanel from '@/components/LoginPanel'
 import TabBar from '@/components/TabBar'
 import { BmiInput, BmiResult, calculateBmiResult, isValidBmiInput } from '@/utils/bmi'
+import { getToken } from '@/utils/auth'
+import { getUsageStatus, UsageStatus } from '@/utils/api'
 import { guardFeatureUse } from '@/utils/gate'
 import { AdviceResponse, fetchAdvice, saveRecord } from '@/utils/records'
 import './index.css'
@@ -12,13 +14,30 @@ export default function IndexPage() {
   const [form, setForm] = useState<BmiInput>({ heightCm: 172, weightKg: 68, age: 30, gender: 'male' })
   const [result, setResult] = useState<BmiResult | null>(null)
   const [advice, setAdvice] = useState<AdviceResponse | null>(null)
+  const [usage, setUsage] = useState<UsageStatus | null>(null)
   const [loginVisible, setLoginVisible] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  useDidShow(() => {
+    refreshUsage()
+  })
 
   const idealText = useMemo(() => {
     if (!result) return '完成计算后生成'
     return `${result.healthyWeightMin} - ${result.healthyWeightMax} kg`
   }, [result])
+
+  async function refreshUsage() {
+    if (!getToken()) {
+      setUsage(null)
+      return
+    }
+    try {
+      setUsage(await getUsageStatus())
+    } catch {
+      setUsage(null)
+    }
+  }
 
   function updateNumber(key: keyof Pick<BmiInput, 'heightCm' | 'weightKg' | 'age'>, value: string) {
     setForm((old) => ({ ...old, [key]: Number(value) }))
@@ -41,7 +60,7 @@ export default function IndexPage() {
     }
     setLoading(true)
     try {
-      const allowed = await guardFeatureUse('unlock_advice', () => setLoginVisible(true))
+      const allowed = await guardFeatureUse('unlock_advice', () => setLoginVisible(true), setUsage)
       if (!allowed) return
       const data = await fetchAdvice({
         heightCm: result.heightCm,
@@ -52,6 +71,7 @@ export default function IndexPage() {
         category: result.category
       })
       setAdvice(data)
+      await refreshUsage()
     } catch (error) {
       Taro.showToast({ title: error instanceof Error ? error.message : '暂时无法解锁', icon: 'none' })
     } finally {
@@ -66,9 +86,10 @@ export default function IndexPage() {
     }
     setLoading(true)
     try {
-      const allowed = await guardFeatureUse('save_record', () => setLoginVisible(true))
+      const allowed = await guardFeatureUse('save_record', () => setLoginVisible(true), setUsage)
       if (!allowed) return
       await saveRecord(result, advice || undefined)
+      await refreshUsage()
       Taro.showToast({ title: '已保存记录', icon: 'success' })
     } catch (error) {
       Taro.showToast({ title: error instanceof Error ? error.message : '保存失败', icon: 'none' })
@@ -82,7 +103,18 @@ export default function IndexPage() {
       <View className='hero'>
         <Text className='hero__eyebrow'>BMI HEALTH INDEX</Text>
         <Text className='hero__title'>身体质量指数测算</Text>
-        <Text className='hero__desc'>计算免费；专业建议需登录后使用每日次数或观看激励视频解锁。</Text>
+        <Text className='hero__desc'>BMI 计算免费；健康建议、保存记录和查看趋势会消耗今日次数。</Text>
+      </View>
+
+      <View className='quota-strip' onClick={() => !getToken() && setLoginVisible(true)}>
+        <View>
+          <Text className='quota-strip__label'>今日可用次数</Text>
+          <Text className='quota-strip__hint'>0 次后观看广告可 +1，次日 0 点恢复 3 次</Text>
+        </View>
+        <View className='quota-strip__right'>
+          <Text className='quota-strip__value'>{usage ? `${usage.remaining}/${usage.dailyTotal}` : '--/--'}</Text>
+          <Text className='quota-strip__total'>{usage ? `累计 ${usage.totalUsed} 次` : '登录后同步'}</Text>
+        </View>
       </View>
 
       <View className='card'>
@@ -167,7 +199,7 @@ export default function IndexPage() {
       </View>
 
       <Button className='outline-button' loading={loading} onClick={handleSave}>保存真实记录</Button>
-      <LoginPanel visible={loginVisible} onClose={() => setLoginVisible(false)} onSuccess={() => setLoginVisible(false)} />
+      <LoginPanel visible={loginVisible} onClose={() => setLoginVisible(false)} onSuccess={refreshUsage} />
       <TabBar active='home' />
     </View>
   )

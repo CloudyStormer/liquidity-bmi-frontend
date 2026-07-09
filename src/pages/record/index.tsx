@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Taro, { useDidShow } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { Button, Canvas, Text, View } from '@tarojs/components'
 import LoginPanel from '@/components/LoginPanel'
 import TabBar from '@/components/TabBar'
@@ -10,32 +10,26 @@ import './index.css'
 
 export default function RecordPage() {
   const [records, setRecords] = useState<BmiRecord[]>([])
+  const [unlocked, setUnlocked] = useState(false)
   const [loginVisible, setLoginVisible] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  useDidShow(() => {
-    if (getToken()) {
-      loadRecords(false)
-    }
-  })
 
   useEffect(() => {
     drawTrend(records)
   }, [records])
 
-  async function loadRecords(consume = true) {
+  async function unlockRecords() {
     if (!getToken()) {
       setLoginVisible(true)
       return
     }
     setLoading(true)
     try {
-      if (consume) {
-        const allowed = await guardFeatureUse('view_records', () => setLoginVisible(true))
-        if (!allowed) return
-      }
+      const allowed = await guardFeatureUse('view_records', () => setLoginVisible(true))
+      if (!allowed) return
       const data = await listRecords()
       setRecords(data.records)
+      setUnlocked(true)
     } catch (error) {
       Taro.showToast({ title: error instanceof Error ? error.message : '读取失败', icon: 'none' })
     } finally {
@@ -62,7 +56,7 @@ export default function RecordPage() {
     if (points.length < 2) {
       ctx.setFillStyle('#8b9992')
       ctx.setFontSize(13)
-      ctx.fillText('保存至少 2 条记录后生成趋势曲线', 58, 106)
+      ctx.fillText(unlocked ? '保存至少 2 条记录后生成趋势曲线' : '解锁后查看真实趋势曲线', 66, 106)
       ctx.draw()
       return
     }
@@ -104,20 +98,32 @@ export default function RecordPage() {
     <View className='record-page'>
       <View className='record-header'>
         <Text className='record-header__title'>真实记录曲线</Text>
-        <Text className='record-header__desc'>所有记录由后端按当前 openid 绑定用户隔离保存。</Text>
+        <Text className='record-header__desc'>查看曲线和历史数据会消耗 1 次今日功能次数；所有记录按当前 openid 用户隔离。</Text>
       </View>
+
+      {!unlocked && (
+        <View className='unlock-card'>
+          <Text className='unlock-card__title'>记录视图已锁定</Text>
+          <Text className='unlock-card__desc'>解锁后会从后端读取你的真实 BMI 曲线和历史数据。次数为 0 时，可观看广告增加 1 次。</Text>
+          <Button className='unlock-button' loading={loading} onClick={unlockRecords}>解锁记录视图</Button>
+        </View>
+      )}
 
       <View className='record-card'>
         <View className='record-card__top'>
           <Text className='record-card__title'>BMI Canvas 曲线</Text>
-          <Button className='mini-button' loading={loading} onClick={() => loadRecords(true)}>刷新</Button>
+          {unlocked && <Button className='mini-button' loading={loading} onClick={unlockRecords}>刷新</Button>}
         </View>
         <Canvas canvasId='bmiTrendCanvas' className='trend-canvas' />
       </View>
 
       <View className='record-card'>
         <Text className='record-card__title'>历史数据</Text>
-        {records.length ? records.map((item) => (
+        {!unlocked ? (
+          <View className='empty-state'>
+            <Text>解锁后显示你的真实历史记录。</Text>
+          </View>
+        ) : records.length ? records.map((item) => (
           <View className='record-row' key={item.id}>
             <View>
               <Text className='record-row__date'>{item.createdAt.slice(0, 10)}</Text>
@@ -135,7 +141,7 @@ export default function RecordPage() {
         )}
       </View>
 
-      <LoginPanel visible={loginVisible} onClose={() => setLoginVisible(false)} onSuccess={() => loadRecords(false)} />
+      <LoginPanel visible={loginVisible} onClose={() => setLoginVisible(false)} onSuccess={() => setLoginVisible(false)} />
       <TabBar active='record' />
     </View>
   )

@@ -40,6 +40,52 @@
   box-shadow: 0 8rpx 30rpx rgba(25, 45, 36, 0.06);
 }
 
+.quota-strip {
+  margin-bottom: 22rpx;
+  padding: 22rpx 26rpx;
+  border: 1rpx solid #dce9e3;
+  border-radius: 18rpx;
+  background: rgba(255, 255, 255, 0.76);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quota-strip__label {
+  display: block;
+  font-size: 27rpx;
+  color: #18211d;
+  font-weight: 750;
+}
+
+.quota-strip__hint {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  line-height: 32rpx;
+  color: #7a8982;
+}
+
+.quota-strip__right {
+  min-width: 150rpx;
+  text-align: right;
+}
+
+.quota-strip__value {
+  display: block;
+  font-size: 38rpx;
+  line-height: 44rpx;
+  color: #2f936b;
+  font-weight: 850;
+}
+
+.quota-strip__total {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8b9992;
+}
+
 .card__title {
   display: block;
   font-size: 31rpx;

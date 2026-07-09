@@ -52,8 +52,12 @@ export interface UsageStatus {
   allowed: boolean
   needAd: boolean
   remaining: number
+  dailyTotal: number
+  usedToday: number
+  totalUsed: number
   freeRemaining: number
   adBonusRemaining: number
+  adRewardsToday: number
   usageDate: string
 }
 
