@@ -8,9 +8,12 @@ import { getToken } from '@/utils/auth'
 import { getUsageStatus, UsageStatus } from '@/utils/api'
 import { guardFeatureUse } from '@/utils/gate'
 import { AdviceResponse, fetchAdvice, saveRecord } from '@/utils/records'
+import { useAppShare } from '@/utils/share'
 import './index.css'
 
 export default function IndexPage() {
+  useAppShare()
+
   const [form, setForm] = useState<BmiInput>({ heightCm: 172, weightKg: 68, age: 30, gender: 'male' })
   const [result, setResult] = useState<BmiResult | null>(null)
   const [advice, setAdvice] = useState<AdviceResponse | null>(null)

@@ -6,9 +6,12 @@ import TabBar from '@/components/TabBar'
 import { getToken } from '@/utils/auth'
 import { guardFeatureUse } from '@/utils/gate'
 import { BmiRecord, listRecords } from '@/utils/records'
+import { useAppShare } from '@/utils/share'
 import './index.css'
 
 export default function RecordPage() {
+  useAppShare()
+
   const [records, setRecords] = useState<BmiRecord[]>([])
   const [unlocked, setUnlocked] = useState(false)
   const [loginVisible, setLoginVisible] = useState(false)

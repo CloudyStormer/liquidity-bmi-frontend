@@ -7,11 +7,14 @@ import TabBar from '@/components/TabBar'
 import { APP_VERSION } from '@/config'
 import { clearAuth, getUser, UserProfile } from '@/utils/auth'
 import { getUsageStatus, UsageStatus } from '@/utils/api'
+import { useAppShare } from '@/utils/share'
 import './index.css'
 
 type PolicyType = 'agreement' | 'privacy' | 'version' | ''
 
 export default function MinePage() {
+  useAppShare()
+
   const [user, setUser] = useState<UserProfile | null>(getUser())
   const [usage, setUsage] = useState<UsageStatus | null>(null)
   const [loginVisible, setLoginVisible] = useState(false)
